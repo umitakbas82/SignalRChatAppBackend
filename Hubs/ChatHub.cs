@@ -19,9 +19,10 @@ namespace SignarRChatAppBackend.Hubs
             await Clients.Caller.SendAsync("UserConnected");
         }
 
-        public override Task OnDisconnectedAsync(Exception exception)
+        public override async Task OnDisconnectedAsync(Exception exception)
         {
-            return base.OnDisconnectedAsync(exception);
+            await Groups.RemoveFromGroupAsync(Context.ConnectionId, "Come2");
+            await base.OnDisconnectedAsync(exception);
         }
     }
 
